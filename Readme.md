@@ -82,6 +82,12 @@ InAppUtils.purchaseProduct(productIdentifier, (error, response) => {
    if(response && response.productIdentifier) {
       Alert.alert('Purchase Successful', 'Your Transaction ID is ' + response.transactionIdentifier);
       //unlock store here.
+      // After providing the item, we call finishPurchase to finalize the transaction.
+       InAppUtils.finishPurchase(response.transactionIdentifier, (error) => {
+         if (!error) {
+           // Transaction Complete
+         }
+       });
    }
 });
 ```
@@ -111,7 +117,7 @@ InAppUtils.restorePurchases((error, response) => {
       Alert.alert('itunes Error', 'Could not connect to itunes store.');
    } else {
       Alert.alert('Restore Successful', 'Successfully restores all your purchases.');
-      
+
       if (response.length === 0) {
         Alert.alert('No Purchases', "We didn't find any purchases to restore.");
         return;
