@@ -356,7 +356,7 @@ static NSString *RCTKeyForInstance(id instance)
 }
 
 static NSString *StringForTransactionState(SKPaymentTransactionState state)
- +{
+ {
      switch(state) {
          case SKPaymentTransactionStatePurchasing: return @"purchasing";
          case SKPaymentTransactionStatePurchased: return @"purchased";
