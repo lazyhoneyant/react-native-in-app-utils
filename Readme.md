@@ -135,6 +135,35 @@ InAppUtils.restorePurchases((error, response) => {
 **NOTE:** `restorePurchasesForUser(username, callback)` is also available.
 https://stackoverflow.com/questions/29255568/is-there-any-way-to-know-purchase-made-by-which-itunes-account-ios/29280858#29280858
 
+
+### Listen for purchase events
+
+Can be used for purchases initiated from the App Store or subscription renewals.
+
+```javascript
+import {
+  NativeEventEmitter,
+  NativeModules,
+} from 'react-native';
+
+const { InAppUtils } = NativeModules;
+
+const InAppUtilsEmitter = new NativeEventEmitter(InAppUtils);
+
+const listener = InAppUtilsEmitter.addListener('PurchaseCompleted', purchase => {
+  if(purchase && purchase.productIdentifier) {
+      Alert.alert('Purchase Successful', 'Your Transaction ID is ' + purchase.transactionIdentifier);
+      //unlock store here.
+   }
+});
+```
+
+to remove listener:
+
+```javascript
+listener.remove();
+```
+
 **Response:** An array of transaction objects with the following fields:
 
 | Field                          | Type   | Description                                        |
